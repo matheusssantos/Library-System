@@ -1,1 +1,9 @@
 GET http://localhost:8080/library
+
+
+###
+
+GET http://localhost:8080/library/statistics/author/Matheus/total-works
+
+###
+GET http://localhost:8080/library/statistics/author/Matheus/recent-works/limit-date/1900

@@ -18,7 +18,8 @@ Content-Type: application/json
 
 {
   "title": "Livro 2",
-  "author": "Matheus"
+  "author": "Matheus",
+  "year": 2020
 }
 
 ###

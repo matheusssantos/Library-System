@@ -15,49 +15,40 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import matheusssantos.librarysystem.models.Book;
+import matheusssantos.librarysystem.services.CollectionService;
 
 @RestController
 @RequestMapping("/books")
 public class BookController {
-  ArrayList<Book> books = new ArrayList<>();
+  private CollectionService collectionService;
 
   public BookController() {
-    this.books.add(new Book("Teste de livro", "Autor teste", 2002));
-    this.books.add(new Book("Livro 1", "Matheus", 1999));
+    this.collectionService = new CollectionService();
   }
 
   @GetMapping("")
   public List<Book> getBooks() {
-    return this.books;
+    return this.collectionService.findAllBooks();
   }
 
   @GetMapping("/titles")
   public List<String> getTitles() {
-    return this.books.stream()
-      .map(book -> book.getTitle())
-      .toList();
+    return this.collectionService.findTitles();
   }
 
   @GetMapping("/authors")
   public List<String> getAuthors() {
-    return this.books.stream()
-      .map(book -> book.getAuthor())
-      .toList();
+    return this.collectionService.findAuthors();
   }
 
   @GetMapping("/filterbooks")
   public List<Book> findBooksByAuthor(@RequestParam("author") String author) {
-    return this.books.stream()
-      .filter(book -> book.getAuthor().equals(author))
-      .toList();
+    return this.collectionService.findBooks(author);
   }
 
   @GetMapping("/title/{title}")
-  public ResponseEntity<Book> findBooksByTitle(@PathVariable("title") String title) {
-    final Book res = this.books.stream()
-      .filter(book -> book.getTitle().equals(title))
-      .findFirst()
-      .orElse(null);
+  public ResponseEntity<Book> findBookByTitle(@PathVariable("title") String title) {
+    Book res = this.collectionService.findBook(title);
 
     return ResponseEntity
       .status(HttpStatus.OK)
@@ -67,8 +58,7 @@ public class BookController {
   @PostMapping("/create")
   public boolean create(@RequestBody Book body) {
     try {
-      this.books.add(body);
-      return true;
+      return this.collectionService.createBook(body);
     } catch (Error error) {
       return false;
     }
@@ -76,21 +66,11 @@ public class BookController {
 
   @GetMapping("/outdated/date/{date}")
   public List<Book> getOutdatedByDate(@PathVariable("date") int date) {
-    return this.books.stream()
-      .filter(book -> book.getYear() < date)
-      .toList();
+    return this.collectionService.findOutdatedBooks(date);
   }
 
   @PatchMapping("/{id}/update")
   public Book update(@PathVariable("id") int id, @RequestBody Book body) {
-    for (int i = 0; i < this.books.size(); i++) {
-      Book aux = this.books.get(i);
-      if (aux.getId().equals(id)) {
-        this.books.set(i, body);
-        return body;
-      }
-    }
-    
-    return null;
+    return this.collectionService.updateBook(id, body);
   }
 }

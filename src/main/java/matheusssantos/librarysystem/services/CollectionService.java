@@ -3,9 +3,13 @@ package matheusssantos.librarysystem.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import matheusssantos.librarysystem.interfaces.ICollectionRepository;
 import matheusssantos.librarysystem.models.Book;
 
-public class CollectionService {
+@Repository
+public class CollectionService implements ICollectionRepository{
   ArrayList<Book> books = new ArrayList<>();
 
   public CollectionService() {
@@ -59,15 +63,23 @@ public class CollectionService {
       .toList();
   }
 
-  public Book updateBook(int id, Book data) {
+  public boolean updateBook(int id, Book data) {
     for (int i = 0; i < this.books.size(); i++) {
       Book aux = this.books.get(i);
       if (aux.getId().equals(id)) {
         this.books.set(i, data);
-        return data;
+        return true;
       }
     }
 
-    return null;
+    return false;
+  }
+
+  public boolean removeBook(int id) {
+    List<Book> aux = this.books.stream()
+      .filter(book -> book.getId() == id)
+      .toList();  
+    
+    return aux.removeAll(aux);
   }
 }

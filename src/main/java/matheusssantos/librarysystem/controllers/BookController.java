@@ -3,6 +3,7 @@ package matheusssantos.librarysystem.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,7 +71,7 @@ public class BookController {
   }
 
   @PatchMapping("/{id}/update")
-  public Book update(@PathVariable("id") int id, @RequestBody Book body) {
+  public boolean update(@PathVariable("id") int id, @RequestBody Book body) {
     return this.collectionService.updateBook(id, body);
   }
 }

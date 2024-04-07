@@ -1,0 +1,37 @@
+GET http://localhost:8080/books
+
+###
+
+GET http://localhost:8080/books/titles
+
+###
+
+GET http://localhost:8080/books/filterbooks?author=Autor teste
+
+###
+
+GET http://localhost:8080/books/title/Livro 1
+
+###
+POST http://localhost:8080/books/create
+Content-Type: application/json
+
+{
+  "title": "Livro 2",
+  "author": "Matheus"
+}
+
+###
+
+GET http://localhost:8080/books/outdated/date/2024
+
+###
+
+PATCH http://localhost:8080/books/7/update
+Content-Type: application/json
+
+{
+  "title": "Livro 2",
+  "author": "Matheus",
+  "year": 2000
+}

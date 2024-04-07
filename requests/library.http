@@ -1,9 +1,1 @@
-GET http://localhost:8080/library/books
-
-###
-
-GET http://localhost:8080/library/authors
-
-###
-
-GET http://localhost:8080/library/titles
+GET http://localhost:8080/library

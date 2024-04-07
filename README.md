@@ -1,2 +1,2 @@
 # Library-System
-Projeto de introdução ao Framework Spring Book do Java
+Projeto de introdução ao Framework Spring Boot do Java

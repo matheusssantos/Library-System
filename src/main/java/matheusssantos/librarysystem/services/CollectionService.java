@@ -9,13 +9,10 @@ import matheusssantos.librarysystem.interfaces.ICollectionRepository;
 import matheusssantos.librarysystem.models.Book;
 
 @Repository
-public class CollectionService implements ICollectionRepository{
+public class CollectionService implements ICollectionRepository {
   ArrayList<Book> books = new ArrayList<>();
 
-  public CollectionService() {
-    this.books.add(new Book("Teste de livro", "Autor teste", 2002));
-    this.books.add(new Book("Livro 1", "Matheus", 1999));
-  }
+  public CollectionService() {}
 
   public List<Book> findAllBooks() {
     return this.books;
@@ -51,7 +48,7 @@ public class CollectionService implements ICollectionRepository{
   public boolean createBook(Book data) {
     if (data.getYear() > 2024) return false;
 
-    Book book = new Book(data.getTitle(), data.getAuthor(), data.getYear());
+    Book book = new Book(0, data.getTitle(), data.getAuthor(), data.getYear());
     this.books.add(book);
 
     return true;

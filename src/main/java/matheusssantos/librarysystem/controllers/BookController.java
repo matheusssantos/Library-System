@@ -1,11 +1,10 @@
 package matheusssantos.librarysystem.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,40 +15,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import matheusssantos.librarysystem.models.Book;
+import matheusssantos.librarysystem.repositorys.CollectionJDBRepository;
 import matheusssantos.librarysystem.services.CollectionService;
 
 @RestController
 @RequestMapping("/books")
 public class BookController {
   private CollectionService collectionService;
+  private CollectionJDBRepository collectionRepository;
 
-  public BookController() {
-    this.collectionService = new CollectionService();
+  public BookController(CollectionJDBRepository collectionRepository) {
+    this.collectionRepository = collectionRepository;
   }
 
   @GetMapping("")
   public List<Book> getBooks() {
-    return this.collectionService.findAllBooks();
+    return this.collectionRepository.findAllBooks();
   }
 
   @GetMapping("/titles")
   public List<String> getTitles() {
-    return this.collectionService.findTitles();
+    return this.collectionRepository.findTitles();
   }
 
   @GetMapping("/authors")
   public List<String> getAuthors() {
-    return this.collectionService.findAuthors();
+    return this.collectionRepository.findAuthors();
   }
 
   @GetMapping("/filterbooks")
   public List<Book> findBooksByAuthor(@RequestParam("author") String author) {
-    return this.collectionService.findBooks(author);
+    return this.collectionRepository.findBooks(author);
   }
 
   @GetMapping("/title/{title}")
   public ResponseEntity<Book> findBookByTitle(@PathVariable("title") String title) {
-    Book res = this.collectionService.findBook(title);
+    Book res = this.collectionRepository.findBook(title);
 
     return ResponseEntity
       .status(HttpStatus.OK)
@@ -58,20 +59,16 @@ public class BookController {
 
   @PostMapping("/create")
   public boolean create(@RequestBody Book body) {
-    try {
-      return this.collectionService.createBook(body);
-    } catch (Error error) {
-      return false;
-    }
-  }
-
-  @GetMapping("/outdated/date/{date}")
-  public List<Book> getOutdatedByDate(@PathVariable("date") int date) {
-    return this.collectionService.findOutdatedBooks(date);
+    return this.collectionRepository.createBook(body);
   }
 
   @PatchMapping("/{id}/update")
   public boolean update(@PathVariable("id") int id, @RequestBody Book body) {
-    return this.collectionService.updateBook(id, body);
+    return this.collectionRepository.updateBook(id, body);
+  }
+
+  @DeleteMapping("/{id}/delete")
+  public boolean remove(@PathVariable("id") int id) {
+    return this.collectionRepository.removeBook(id);
   }
 }

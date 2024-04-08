@@ -6,33 +6,34 @@ GET http://localhost:8080/books/titles
 
 ###
 
-GET http://localhost:8080/books/filterbooks?author=Autor teste
+GET http://localhost:8080/books/filterbooks?author=TESTER
 
 ###
 
-GET http://localhost:8080/books/title/Livro 1
+GET http://localhost:8080/books/title/Livro3
 
 ###
+
 POST http://localhost:8080/books/create
 Content-Type: application/json
 
 {
-  "title": "Livro 2",
-  "author": "Matheus",
+  "title": "Livro 5",
+  "author": "TESTER",
   "year": 2020
 }
 
 ###
 
-GET http://localhost:8080/books/outdated/date/2024
-
-###
-
-PATCH http://localhost:8080/books/7/update
+PATCH http://localhost:8080/books/1/update
 Content-Type: application/json
 
 {
-  "title": "Livro 2",
-  "author": "Matheus",
+  "title": "Livro 3",
+  "author": "TESTER",
   "year": 2000
 }
+
+### 
+
+DELETE http://localhost:8080/books/8/delete 

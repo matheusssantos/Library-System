@@ -6,8 +6,8 @@ public class Book {
   private String author;
   private Integer year;
   
-  public Book(String title, String author, Integer year) {
-    this.id = title.length();
+  public Book(Integer id, String title, String author, Integer year) {
+    this.id = id;
     this.title = title;
     this.author = author;
     this.year = year;
